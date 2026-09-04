@@ -1,0 +1,6 @@
+{
+  "name": "VACOCA - Volunteers Anti-Corruption Campaign Africa",
+  "description": "A civil-society, citizen and volunteer-driven anti-corruption movement promoting integrity, transparency, accountability, civic participation and collective action across Africa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
