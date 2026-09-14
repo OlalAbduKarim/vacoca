@@ -271,7 +271,7 @@ export const WhatWeDoView: React.FC = () => {
               CAMPUS ENGAGEMENT & <span className="text-[#1B4332]">INTELLECTUAL ACTIVISM</span>
             </h2>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-              Founded by Dr. Allawi Ssemanda Apuuli in 2010 during his student leadership tenure at Mbarara University of Science and Technology (MUST), VACOCA is built upon three non-negotiable strategic pillars that mobilize the intellectual power of African youth without commercial compromise.
+              Inspired in 2008 by President Yoweri Museveni’s national state address and established by General Elly Tumwine alongside original co-founders Hon. Major Kyomugisha Grace, Yasine Juma, Waidhuba John, and Merab Akampumuza (fully registered in March 2011), VACOCA is built upon three non-negotiable strategic pillars that mobilize the intellectual and civic power of Ugandan youth without commercial compromise.
             </p>
           </div>
 
@@ -290,7 +290,7 @@ export const WhatWeDoView: React.FC = () => {
                 "Intellectual Activism" Accountability Forums
               </h3>
               <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
-                Rather than street confrontation, VACOCA brings power into the lecture hall. We invite high-profile public servants, senior cabinet ministers (such as former PM Hon. Amama Mbabazi), late Security Minister Gen. Elly Tumwine, seasoned constitutional lawyers, military commanders, and politicians directly to university campuses.
+                Rather than street confrontation, VACOCA brings power into the lecture hall. We invite high-profile public servants, senior cabinet ministers, seasoned constitutional lawyers, military commanders, and civic leaders directly to university campuses.
               </p>
               <div className="p-4 bg-[#F9F9F7] border border-gray-200 text-xs text-gray-800 space-y-1">
                 <strong className="text-[#1B4332] block font-mono-accent uppercase tracking-wider">Methodology:</strong>

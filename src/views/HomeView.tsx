@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
+import { VACOCA_CHARTER } from '../data/initialData';
 import {
   ShieldAlert,
   UserPlus,
@@ -19,6 +20,9 @@ import {
   ExternalLink,
   Lock,
   HeartHandshake,
+  MapPin,
+  Target,
+  Eye,
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -133,18 +137,108 @@ export const HomeView: React.FC = () => {
           SECTION 2: VALUES STRIP (Geometric Deep Green Accent Bar)
          ========================================================================= */}
       <section className="h-14 bg-[#1B4332] flex items-center justify-around px-4 md:px-20 border-y border-[#1A1A1A] overflow-x-auto whitespace-nowrap">
-        {['INTEGRITY', 'TRANSPARENCY', 'ACCOUNTABILITY', 'CITIZEN ACTION', 'AFRICA'].map(
+        {['ACCOUNTABILITY', 'INTEGRITY', 'SUSTAINABILITY', 'UNITY', 'PEACE', 'MOTTO: “NO MORE CORRUPTION WE SHALL WIN.”'].map(
           (value, idx, arr) => (
             <React.Fragment key={value}>
-              <span className="text-[10px] font-bold text-white tracking-[0.3em] uppercase font-mono-accent">
+              <span className="text-[10px] font-bold text-white tracking-[0.25em] uppercase font-mono-accent">
                 {value}
               </span>
               {idx < arr.length - 1 && (
-                <div className="w-1 h-1 rounded-full bg-[#D4AF37] mx-3 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] mx-3 shrink-0" />
               )}
             </React.Fragment>
           )
         )}
+      </section>
+
+      {/* =========================================================================
+          SECTION 2B: OFFICIAL CHARTER — MOTTO, MISSION & OBJECTIVES
+         ========================================================================= */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-gray-200">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {/* Motto & Mission Highlight Box */}
+          <div className="lg:col-span-5 bg-[#1A1A1A] text-white p-8 sm:p-10 flex flex-col justify-between space-y-6 border-l-4 border-[#D4AF37]">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-xs font-mono-accent uppercase font-bold text-[#D4AF37] tracking-wider">
+                <Sparkles className="w-4 h-4" />
+                <span>VACOCA Institutional Identity</span>
+              </div>
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono-accent uppercase text-gray-400 font-bold block">Our Motto</span>
+                <p className="text-2xl sm:text-3xl font-black font-display text-white tracking-tight italic">
+                  “No more corruption we shall win.”
+                </p>
+              </div>
+              <div className="space-y-2 pt-2 border-t border-white/10">
+                <span className="text-[10px] font-mono-accent uppercase text-[#D4AF37] font-bold block">Our Mission</span>
+                <p className="text-lg font-bold text-gray-200 font-display italic">
+                  “To create a corruption free society.”
+                </p>
+              </div>
+              <div className="space-y-2 pt-2 border-t border-white/10">
+                <span className="text-[10px] font-mono-accent uppercase text-gray-400 font-bold block">Our Vision</span>
+                <p className="text-sm font-medium text-gray-300 italic">
+                  “To be the indomitable and most sustainable mass movement against corruption.”
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2 text-gray-300">
+                <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <span>Nommo Gallery, Opposite Rwenzori House, Kampala</span>
+              </div>
+              <button
+                onClick={() => setCurrentView('contact')}
+                className="text-[#D4AF37] hover:underline font-bold font-mono-accent shrink-0"
+              >
+                Visit →
+              </button>
+            </div>
+          </div>
+
+          {/* 7 Objectives Summary */}
+          <div className="lg:col-span-7 bg-white border border-gray-200 p-8 sm:p-10 shadow-sm flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-[2px] bg-[#1B4332]" />
+                  <span className="text-xs font-mono-accent font-bold uppercase tracking-widest text-[#1B4332]">
+                    Legal Mandate & Directives
+                  </span>
+                </div>
+                <span className="text-xs font-mono-accent text-gray-500 font-bold">7 Objectives</span>
+              </div>
+              <h3 className="text-2xl font-black text-[#1A1A1A] uppercase font-display tracking-tight">
+                OUR CORE OBJECTIVES
+              </h3>
+              <p className="text-xs text-gray-600">
+                Registered with the NGO Board of Uganda. Operating under the 1995 Constitution of the Republic of Uganda.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                {VACOCA_CHARTER.objectives.slice(0, 6).map((obj, i) => (
+                  <div key={i} className="flex items-start gap-2.5 text-xs text-gray-700 bg-[#F9F9F7] p-2.5 border border-gray-200">
+                    <span className="font-mono-accent font-bold text-[#1B4332] shrink-0">0{i + 1}.</span>
+                    <span className="leading-snug">{obj}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
+              <span className="text-gray-500">
+                Objective 07: Work towards the eradication of corruption.
+              </span>
+              <button
+                onClick={() => setCurrentView('about')}
+                className="text-[#1B4332] font-bold hover:underline flex items-center gap-1 font-mono-accent uppercase tracking-wider"
+              >
+                <span>Full Charter</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* =========================================================================
@@ -524,7 +618,7 @@ export const HomeView: React.FC = () => {
 
               <div className="p-4 bg-[#F9F9F7] border border-gray-200 space-y-1 text-xs text-gray-700">
                 <div className="font-bold text-[#1A1A1A] uppercase font-mono-accent text-[10px] tracking-wider">
-                  Core Founding Principle (2010)
+                  Core Founding Principle (2008–2011)
                 </div>
                 <p className="italic font-medium">
                   "{leaderProfile.approvedQuote}"
@@ -533,10 +627,10 @@ export const HomeView: React.FC = () => {
 
               <div className="space-y-2 text-xs text-gray-600">
                 <div className="flex items-center gap-2 font-mono-accent text-[10px] uppercase font-bold text-[#1B4332]">
-                  <GraduationCap className="w-3.5 h-3.5 text-[#D4AF37]" /> MUST 2011 Guild President • DWC Think Tank
+                  <GraduationCap className="w-3.5 h-3.5 text-[#D4AF37]" /> Lead Founder & Inspirer • Registered March 2011
                 </div>
                 <p className="leading-relaxed">
-                  Author of <em>Global Governance and Norm Contestation: How BRICS is Reshaping World Order</em>.
+                  Pioneer of patriotic citizen volunteerism and university anti-corruption mobilization across Uganda.
                 </p>
               </div>
 
@@ -544,7 +638,7 @@ export const HomeView: React.FC = () => {
                 onClick={() => setCurrentView('leadership')}
                 className="w-full bg-[#1A1A1A] text-white hover:bg-[#1B4332] py-3.5 text-xs font-bold uppercase tracking-widest transition-colors text-center cursor-pointer flex items-center justify-center gap-2"
               >
-                <span>Explore Founder Bio & Policy Papers</span>
+                <span>Explore Founders & Movement History</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
               </button>
             </div>
@@ -555,20 +649,23 @@ export const HomeView: React.FC = () => {
             <div className="flex items-center space-x-3">
               <div className="w-8 h-[2px] bg-[#1B4332]" />
               <span className="text-xs font-mono-accent font-bold tracking-widest text-[#1B4332] uppercase">
-                Origins & Academic Inception (2010)
+                Origins & History (2008–2011)
               </span>
             </div>
 
             <h2 className="text-3xl sm:text-5xl font-black text-[#1A1A1A] font-display uppercase tracking-tight leading-tight">
-              FROM CAMPUS ROOTS TO <span className="text-[#1B4332]">CONTINENTAL CITIZEN POWER</span>
+              FROM PRESIDENTIAL CALL TO <span className="text-[#1B4332]">CONTINENTAL CITIZEN POWER</span>
             </h2>
 
             <div className="space-y-4 text-gray-700 text-sm sm:text-base leading-relaxed">
               <p>
-                Founded in <strong>2010</strong> at <strong>Mbarara University of Science and Technology (MUST)</strong> by academic and activist <strong>Dr. Allawi Ssemanda Apuuli</strong>, VACOCA was born from a transformative realization: anti-corruption activism fails when treated as a commercial job or donor-funded project.
+                In <strong>2008</strong>, during a national state address, <strong>President Yoweri Kaguta Museveni</strong> stated that while he had won many battles, the battle that he had failed to win was the battle against corruption, leaving it to every Ugandan citizen to help him fight it.
               </p>
               <p>
-                Through the <strong>Zero-Budget Volunteer Mandate</strong> and <strong>Inter-University Chapters</strong> across MUST, Makerere University, Ndejje University, and Bishop Stuart University, VACOCA mobilizes unbought student leaders to hold power to account.
+                Inspired by this call, <strong>General Elly Tumwine</strong> took the initiative to establish <strong>VACOCA</strong> alongside dedicated original co-founders: <strong>Hon. Major Kyomugisha Grace</strong>, <strong>Yasine Juma</strong>, <strong>Waidhuba John</strong>, and <strong>Merab Akampumuza</strong>.
+              </p>
+              <p>
+                By <strong>2011</strong>, the movement had mobilized more than <strong>5,000 members</strong> and established active chapters in universities across Uganda, systematically training youths on the importance of fighting corruption and upholding civic integrity—leading to full registration in <strong>March 2011</strong>.
               </p>
             </div>
 

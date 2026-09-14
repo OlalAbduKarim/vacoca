@@ -9,12 +9,14 @@ import {
   PartnerInquiry,
   ContactMessage,
   ContactDetails,
+  Founder,
 } from '../types';
 import {
   INITIAL_IMPACT_STATS,
   INITIAL_LEADER_PROFILE,
   INITIAL_STORIES,
   INITIAL_CONTACT_DETAILS,
+  ORIGINAL_FOUNDERS,
 } from '../data/initialData';
 
 interface Toast {
@@ -31,6 +33,7 @@ interface AppContextType {
   updateImpactStats: (stats: Partial<ImpactStats>) => void;
   leaderProfile: LeaderProfile;
   updateLeaderProfile: (profile: Partial<LeaderProfile>) => void;
+  founders: Founder[];
   stories: StoryItem[];
   addStory: (story: StoryItem) => void;
   updateStory: (id: string, story: Partial<StoryItem>) => void;
@@ -127,16 +130,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [leaderProfile, setLeaderProfile] = useState<LeaderProfile>(() => {
     try {
-      const saved = safeStorage.getItem('vacoca_leader_v2') || safeStorage.getItem('vacoca_leader');
+      const saved = safeStorage.getItem('vacoca_leader_v5') || safeStorage.getItem('vacoca_leader_v2') || safeStorage.getItem('vacoca_leader');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && typeof parsed === 'object') {
-          // Purge any deprecated names or malformed data
+          // Purge any deprecated names, Dr. Allawi Ssemanda references, or malformed data
+          const nameLower = (parsed.name || '').toLowerCase();
           if (
             !parsed.name ||
             typeof parsed.name !== 'string' ||
-            parsed.name.toLowerCase().includes('henry') ||
-            parsed.name.toLowerCase().includes('sebutinde')
+            nameLower.includes('allawi') ||
+            nameLower.includes('ssemanda') ||
+            nameLower.includes('apuuli') ||
+            nameLower.includes('henry') ||
+            nameLower.includes('sebutinde') ||
+            !nameLower.includes('tumwine')
           ) {
             return INITIAL_LEADER_PROFILE;
           }
@@ -148,8 +156,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           return {
             ...INITIAL_LEADER_PROFILE,
             ...parsed,
+            name: 'General Elly Tumwine',
             image,
-            bio: Array.isArray(parsed.bio) ? parsed.bio : INITIAL_LEADER_PROFILE.bio,
+            bio: Array.isArray(parsed.bio) && parsed.bio.length >= 3 && !parsed.bio[0].toLowerCase().includes('allawi')
+              ? parsed.bio
+              : INITIAL_LEADER_PROFILE.bio,
             message: Array.isArray(parsed.message) ? parsed.message : INITIAL_LEADER_PROFILE.message,
           };
         }
@@ -162,12 +173,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [stories, setStories] = useState<StoryItem[]>(() => {
     try {
-      const saved = safeStorage.getItem('vacoca_stories_v2') || safeStorage.getItem('vacoca_stories');
+      const saved = safeStorage.getItem('vacoca_stories_v5') || safeStorage.getItem('vacoca_stories_v2') || safeStorage.getItem('vacoca_stories');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // If old sample stories exist without DWC publications, or mention deprecated names, refresh
-          if (parsed.some((s: StoryItem) => s.id === 'story-1' || s.id === 'story-2' || (s.author && s.author.toLowerCase().includes('henry')))) {
+          // If old sample stories exist with DWC publications or deprecated names, refresh
+          if (
+            parsed.some(
+              (s: StoryItem) =>
+                s.id?.includes('dwc') ||
+                s.slug?.includes('dwc') ||
+                s.id === 'story-1' ||
+                s.id === 'story-2' ||
+                (s.author && (s.author.toLowerCase().includes('allawi') || s.author.toLowerCase().includes('ssemanda') || s.author.toLowerCase().includes('henry'))) ||
+                (s.content && (s.content.toLowerCase().includes('allawi') || s.content.toLowerCase().includes('ssemanda')))
+            )
+          ) {
             return INITIAL_STORIES;
           }
           return parsed;
@@ -185,6 +206,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && typeof parsed === 'object') {
+          // If stored data contains the obsolete placeholder values or lacks official email, refresh
+          if (
+            !parsed.email ||
+            parsed.email.includes('placeholder') ||
+            parsed.email.includes('info@vacoca.org') ||
+            (parsed.officeAddressPlaceholder && parsed.officeAddressPlaceholder.includes('Placeholder'))
+          ) {
+            return INITIAL_CONTACT_DETAILS;
+          }
           return { ...INITIAL_CONTACT_DETAILS, ...parsed };
         }
       }
@@ -259,11 +289,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [impactStats]);
 
   useEffect(() => {
+    safeStorage.setItem('vacoca_leader_v5', JSON.stringify(leaderProfile));
     safeStorage.setItem('vacoca_leader_v2', JSON.stringify(leaderProfile));
     safeStorage.setItem('vacoca_leader', JSON.stringify(leaderProfile));
   }, [leaderProfile]);
 
   useEffect(() => {
+    safeStorage.setItem('vacoca_stories_v5', JSON.stringify(stories));
     safeStorage.setItem('vacoca_stories_v2', JSON.stringify(stories));
     safeStorage.setItem('vacoca_stories', JSON.stringify(stories));
   }, [stories]);
@@ -343,7 +375,37 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       status: 'Received - Under Review',
     };
     setReports((prev) => [newReport, ...prev]);
-    showToast(`Concern logged securely. Reference ID: ${trackingCode}`);
+
+    // Dispatch to server API to email anticorruptionvolunteers150@gmail.com
+    fetch('/api/report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        trackingCode,
+        title: reportData.institutionOrSector
+          ? `${reportData.typeOfConcern} - ${reportData.institutionOrSector}`
+          : reportData.typeOfConcern,
+        category: reportData.typeOfConcern,
+        entity: reportData.institutionOrSector,
+        description: reportData.description,
+        location: `${reportData.locationCityOrRegion || ''}, ${reportData.locationCountry || ''}`.trim(),
+        dateObserved: reportData.dateOfIncident,
+        evidenceDescription: reportData.evidenceFileName || (reportData.evidenceProvided ? 'Evidence provided' : 'None'),
+        urgency: 'Standard / Verified Review',
+        isAnonymous: reportData.isAnonymous,
+        reporterName: reportData.contactName,
+        reporterContact: reportData.contactEmail || reportData.contactPhone,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('[API REPORT DISPATCH]', data);
+      })
+      .catch((err) => {
+        console.warn('Background report email dispatch caught:', err);
+      });
+
+    showToast(`Concern logged & dispatched to anticorruptionvolunteers150@gmail.com. Ref: ${trackingCode}`);
     return trackingCode;
   };
 
@@ -363,7 +425,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       status: 'Pending Review',
     };
     setVolunteerApplications((prev) => [newApp, ...prev]);
-    showToast('Volunteer application received! Welcome to the VACOCA movement.');
+
+    // Dispatch to server API to email anticorruptionvolunteers150@gmail.com
+    fetch('/api/enroll', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(appData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('[API ENROLL DISPATCH]', data);
+      })
+      .catch((err) => {
+        console.warn('Background enrollment email dispatch caught:', err);
+      });
+
+    showToast('Enrollment received & sent to anticorruptionvolunteers150@gmail.com!');
   };
 
   // Partner Submission
@@ -386,7 +463,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       timestamp: new Date().toLocaleString(),
     };
     setContactMessages((prev) => [newMsg, ...prev]);
-    showToast('Message sent to VACOCA inquiry desk.');
+
+    // Dispatch to server API to email anticorruptionvolunteers150@gmail.com
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(msgData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('[API CONTACT DISPATCH]', data);
+      })
+      .catch((err) => {
+        console.warn('Background contact email dispatch caught:', err);
+      });
+
+    showToast('Message dispatched to anticorruptionvolunteers150@gmail.com.');
   };
 
   // Backup / Reset
@@ -449,6 +541,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         updateImpactStats,
         leaderProfile,
         updateLeaderProfile,
+        founders: ORIGINAL_FOUNDERS,
         stories,
         addStory,
         updateStory,

@@ -34,6 +34,15 @@ export interface LeaderProfile {
   image: string;
 }
 
+export interface Founder {
+  id: string;
+  name: string;
+  role: string;
+  badge: string;
+  bio: string;
+  image?: string;
+}
+
 export interface StoryItem {
   id: string;
   title: string;
@@ -109,6 +118,14 @@ export interface ContactMessage {
 }
 
 export interface ContactDetails {
+  email: string;
+  phones: string[];
+  secretariatName: string;
+  location: string;
+  opposite: string;
+  cityCountry: string;
+  postalAddress: string;
+  visitNote: string;
   emailPlaceholder: string;
   phonePlaceholder: string;
   officeAddressPlaceholder: string;
@@ -120,6 +137,23 @@ export interface ContactDetails {
     telegram: string;
   };
   mapActivated: boolean;
+}
+
+export interface OrganizationCharter {
+  name: string;
+  acronym: string;
+  about: string;
+  registration: string;
+  legalBasis: string;
+  nature: string;
+  motto: string;
+  mission: string;
+  vision: string;
+  values: {
+    title: string;
+    desc: string;
+  }[];
+  objectives: string[];
 }
 
 export interface FAQItem {

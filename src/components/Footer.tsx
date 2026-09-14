@@ -76,13 +76,32 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
-              A civil-society, citizen and volunteer-driven anti-corruption movement focused on promoting integrity, transparency, accountability, civic participation, and collective action across Africa.
+              Volunteers Anti-Corruption Campaign Africa (VACOCA) is an anti-corruption NGO registered with the NGO Board of Uganda, in existence since 2008. Operating under the 1995 Constitution of the Republic of Uganda.
             </p>
 
-            <div className="pt-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 text-xs text-gray-300">
+            {/* Secretariat & Motto badge */}
+            <div className="pt-1 space-y-2 text-xs">
+              <div className="p-3 bg-white/5 border border-white/10 space-y-1">
+                <div className="text-[10px] font-mono-accent uppercase font-bold text-[#D4AF37]">
+                  Secretariat Location:
+                </div>
+                <div className="text-gray-300 leading-snug">
+                  Nommo Gallery, Opposite Rwenzori House<br />
+                  Kampala, Uganda • P.O. Box 120762
+                </div>
+                <div className="text-[11px] text-gray-400 pt-1 border-t border-white/5">
+                  <a href="mailto:anticorruptionvolunteers150@gmail.com" className="hover:text-[#D4AF37] block">
+                    anticorruptionvolunteers150@gmail.com
+                  </a>
+                  <div className="text-gray-400">
+                    +256 782 363 894 / +256 777 794 602
+                  </div>
+                </div>
+              </div>
+
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1B4332]/40 border border-[#1B4332] text-xs text-white">
                 <Shield className="w-3.5 h-3.5 text-[#D4AF37]" />
-                <span className="tracking-widest uppercase text-[10px] font-bold">Courage • Integrity • Action • Africa</span>
+                <span className="tracking-wider uppercase text-[10px] font-bold">Motto: “No more corruption we shall win.”</span>
               </div>
             </div>
 

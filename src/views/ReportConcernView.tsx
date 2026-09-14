@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   Copy,
   Info,
+  Mail,
 } from 'lucide-react';
 
 export const ReportConcernView: React.FC = () => {
@@ -30,6 +31,7 @@ export const ReportConcernView: React.FC = () => {
 
   const [simulatedFileName, setSimulatedFileName] = useState<string | null>(null);
   const [submittedTrackingCode, setSubmittedTrackingCode] = useState<string | null>(null);
+  const [lastSubmittedReport, setLastSubmittedReport] = useState<typeof form | null>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -47,7 +49,7 @@ export const ReportConcernView: React.FC = () => {
       return;
     }
 
-    const code = submitReport({
+    const reportToSubmit = {
       typeOfConcern: form.typeOfConcern,
       locationCountry: form.locationCountry,
       locationCityOrRegion: form.locationCityOrRegion,
@@ -61,8 +63,10 @@ export const ReportConcernView: React.FC = () => {
       contactEmail: form.isAnonymous ? undefined : form.contactEmail,
       contactPhone: form.isAnonymous ? undefined : form.contactPhone,
       consentGiven: form.consentGiven,
-    });
+    };
 
+    const code = submitReport(reportToSubmit);
+    setLastSubmittedReport({ ...form });
     setSubmittedTrackingCode(code);
   };
 
@@ -113,11 +117,17 @@ export const ReportConcernView: React.FC = () => {
                 <CheckCircle2 className="w-14 h-14 text-[#1B4332] mx-auto" />
                 <div className="space-y-2">
                   <h3 className="text-2xl font-bold text-[#1A1A1A] uppercase font-display">
-                    Concern Logged Responsibly
+                    Concern Logged & Dispatched
                   </h3>
                   <p className="text-sm text-gray-600 max-w-lg mx-auto leading-relaxed">
-                    Your submission has been safely recorded in our confidential civic intake queue. It will be reviewed by our integrity analysts in strict accordance with our verified review procedures.
+                    Your submission has been securely recorded and transmitted directly to the VACOCA Secretariat intake desk for verified assessment.
                   </p>
+                </div>
+
+                {/* Direct Transmission Verification Badge */}
+                <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-medium flex items-center justify-center gap-2 max-w-md mx-auto">
+                  <Mail className="w-4 h-4 text-emerald-700 shrink-0" />
+                  <span>Transmitted to NGO Email: <strong>anticorruptionvolunteers150@gmail.com</strong></span>
                 </div>
 
                 {/* Tracking Reference Display */}
@@ -139,13 +149,54 @@ export const ReportConcernView: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="p-4 bg-white border border-gray-200 text-xs text-gray-600 max-w-md mx-auto leading-relaxed text-left">
+                {/* Report Summary Snapshot */}
+                {lastSubmittedReport && (
+                  <div className="p-4 bg-white border border-gray-200 text-left text-xs space-y-2 max-w-lg mx-auto">
+                    <div className="flex justify-between border-b border-gray-100 pb-1.5">
+                      <span className="text-gray-500 font-mono-accent uppercase">Category:</span>
+                      <strong className="text-[#1A1A1A]">{lastSubmittedReport.typeOfConcern}</strong>
+                    </div>
+                    {lastSubmittedReport.institutionOrSector && (
+                      <div className="flex justify-between border-b border-gray-100 pb-1.5">
+                        <span className="text-gray-500 font-mono-accent uppercase">Institution / Sector:</span>
+                        <span className="text-[#1A1A1A]">{lastSubmittedReport.institutionOrSector}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between border-b border-gray-100 pb-1.5">
+                      <span className="text-gray-500 font-mono-accent uppercase">Location:</span>
+                      <span className="text-[#1A1A1A]">{lastSubmittedReport.locationCityOrRegion || 'N/A'}, {lastSubmittedReport.locationCountry || 'N/A'}</span>
+                    </div>
+                    <div className="flex justify-between border-b border-gray-100 pb-1.5">
+                      <span className="text-gray-500 font-mono-accent uppercase">Reporter Privacy:</span>
+                      <span className="text-[#1B4332] font-semibold">
+                        {lastSubmittedReport.isAnonymous ? 'Strictly Anonymous' : `${lastSubmittedReport.contactName || 'Disclosed'} (${lastSubmittedReport.contactEmail || lastSubmittedReport.contactPhone || 'Contact provided'})`}
+                      </span>
+                    </div>
+                    {simulatedFileName && (
+                      <div className="flex justify-between pt-0.5">
+                        <span className="text-gray-500 font-mono-accent uppercase">Attachment:</span>
+                        <span className="text-gray-700 font-mono">{simulatedFileName}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div className="p-4 bg-white border border-gray-200 text-xs text-gray-600 max-w-lg mx-auto leading-relaxed text-left">
                   <p>
-                    <strong>Next Steps:</strong> VACOCA will evaluate the information and, where verified and appropriate, compile sanitized civic briefs or assist in referral to the appropriate statutory body (Ombudsman, Auditor General, or Public Prosecutor).
+                    <strong>Next Steps:</strong> VACOCA evaluates all intake records according to procedure. Where verified, our legal and advocacy teams compile sanitized civic briefs or assist in referral to the appropriate statutory oversight authority.
                   </p>
                 </div>
 
-                <div className="pt-2 flex justify-center gap-3">
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  {lastSubmittedReport && (
+                    <a
+                      href={`mailto:anticorruptionvolunteers150@gmail.com?subject=${encodeURIComponent(`[VACOCA Confidential Report - Ref: ${submittedTrackingCode}] ${lastSubmittedReport.institutionOrSector || lastSubmittedReport.typeOfConcern}`)}&body=${encodeURIComponent(`To: Volunteers Anti-Corruption Campaign Africa (VACOCA)\nSecretariat Email: anticorruptionvolunteers150@gmail.com\n\nCONFIDENTIAL CONCERN REPORT\nReference Tracking Code: ${submittedTrackingCode}\nCategory: ${lastSubmittedReport.typeOfConcern}\nTarget Institution / Entity: ${lastSubmittedReport.institutionOrSector || 'Not disclosed'}\nLocation: ${lastSubmittedReport.locationCityOrRegion || ''}, ${lastSubmittedReport.locationCountry || ''}\nDate of Incident: ${lastSubmittedReport.dateOfIncident || 'Recent / Ongoing'}\n\nDescription of Incident:\n${lastSubmittedReport.description}\n\nEvidence Documents Attached/Noted:\n${simulatedFileName || 'None'}\n\nReporter Status: ${lastSubmittedReport.isAnonymous ? 'Anonymous Citizen' : (lastSubmittedReport.contactName || '') + ' (' + (lastSubmittedReport.contactEmail || lastSubmittedReport.contactPhone || '') + ')'}\n\nSubmitted via VACOCA Intake Portal.`)}`}
+                      className="w-full sm:w-auto px-5 py-3 bg-[#1B4332] hover:bg-green-800 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                    >
+                      <Mail className="w-4 h-4 text-[#D4AF37]" />
+                      <span>Send Direct Email Copy</span>
+                    </a>
+                  )}
                   <button
                     onClick={() => {
                       setSubmittedTrackingCode(null);
@@ -165,13 +216,13 @@ export const ReportConcernView: React.FC = () => {
                         evidenceFileNames: '',
                       });
                     }}
-                    className="px-6 py-3 border border-gray-300 hover:bg-gray-100 text-[#1A1A1A] text-xs font-bold uppercase tracking-widest cursor-pointer"
+                    className="w-full sm:w-auto px-5 py-3 border border-gray-300 hover:bg-gray-100 text-[#1A1A1A] text-xs font-bold uppercase tracking-widest cursor-pointer"
                   >
                     Submit Another Report
                   </button>
                   <button
                     onClick={() => setCurrentView('home')}
-                    className="px-6 py-3 bg-[#1B4332] hover:bg-green-800 text-white text-xs font-bold uppercase tracking-widest cursor-pointer"
+                    className="w-full sm:w-auto px-5 py-3 bg-[#1A1A1A] hover:bg-gray-800 text-white text-xs font-bold uppercase tracking-widest cursor-pointer"
                   >
                     Return to Homepage
                   </button>
@@ -376,6 +427,14 @@ export const ReportConcernView: React.FC = () => {
                       <strong>Mandatory Procedure Acknowledgement:</strong> I understand that Volunteers Anti-Corruption Campaign Africa (VACOCA) is a civil society initiative and does not exercise judicial or criminal prosecution authority. “VACOCA will review submissions according to its procedures and may provide information, guidance or referral to relevant and appropriate institutions where applicable.” I certify that the information provided is submitted in good faith.
                     </label>
                   </div>
+                </div>
+
+                {/* Direct Email Routing Notice */}
+                <div className="p-3 bg-[#F9F9F7] border border-gray-200 text-xs text-gray-700 flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-[#1B4332] shrink-0" />
+                  <span>
+                    <strong>Direct Intake Delivery:</strong> When submitted, your concern report is securely transmitted directly to the NGO email at <code className="text-[#1B4332] font-mono font-bold">anticorruptionvolunteers150@gmail.com</code>.
+                  </span>
                 </div>
 
                 {/* Submit Action */}

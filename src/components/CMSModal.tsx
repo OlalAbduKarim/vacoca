@@ -306,7 +306,7 @@ export const CMSModal: React.FC = () => {
                 <div className="p-4 rounded-xl bg-[#141A26] border border-[#2B354C]">
                   <h3 className="text-sm font-bold text-white mb-1">Movement Founder & Leadership Profile</h3>
                   <p className="text-xs text-slate-400">
-                    Leader name is configured as <strong>Dr. Allawi Ssemanda Apuuli</strong> (Founder, VACOCA & Executive Director, Development Watch Centre). You can edit credentials, titles, quotes, and bio paragraphs live.
+                    Lead Founder is configured as <strong>General Elly Tumwine</strong> (Lead Founder & Chief Inspirer, VACOCA). You can edit credentials, titles, quotes, and bio paragraphs live.
                   </p>
                 </div>
 
@@ -331,17 +331,16 @@ export const CMSModal: React.FC = () => {
                       type="text"
                       value={leaderForm.title}
                       onChange={(e) => setLeaderForm({ ...leaderForm, title: e.target.value })}
-                      placeholder="e.g. Founder, VACOCA | Executive Director, DWC"
+                      placeholder="e.g. Lead Founder & Chief Inspirer, VACOCA"
                       className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-sm text-white focus:border-[#D4AF37] focus:outline-none text-[#D4AF37] font-semibold"
                     />
                     <div className="flex flex-wrap gap-1.5 pt-1 text-[10px]">
                       <span className="text-slate-500">Quick presets:</span>
                       {[
-                        'Founder, VACOCA | Executive Director, DWC',
-                        'Leader, VACOCA',
+                        'Lead Founder & Chief Inspirer, VACOCA',
+                        'Founder & Chairman',
                         'Executive Director',
                         'National Coordinator',
-                        'Founder & Chairman',
                         'President',
                       ].map((preset) => (
                         <button
@@ -776,50 +775,137 @@ export const CMSModal: React.FC = () => {
               </div>
             )}
 
-            {/* TAB 7: CONTACT PLACEHOLDERS */}
+            {/* TAB 7: CONTACT & SECRETARIAT DETAILS */}
             {activeTab === 'contact' && (
               <form onSubmit={handleSaveContact} className="max-w-2xl space-y-5">
                 <div className="p-4 rounded-xl bg-[#141A26] border border-[#2B354C]">
-                  <h3 className="text-sm font-bold text-white mb-1">Contact Details & Placeholders</h3>
+                  <h3 className="text-sm font-bold text-white mb-1">Official Secretariat & Contact Details</h3>
                   <p className="text-xs text-slate-400">
-                    Factual Rule: Official contact details use editable placeholders until officially registered and approved.
+                    Official coordinates for the VACOCA Secretariat located at Nommo Gallery, Opposite Rwenzori House, Kampala, Uganda.
                   </p>
                 </div>
 
                 <div className="space-y-3">
                   <div className="space-y-1">
                     <label className="text-xs font-mono-accent uppercase tracking-wider text-slate-300">
-                      Official Email Placeholder
+                      Official Email Address
                     </label>
                     <input
-                      type="text"
-                      value={contactForm.emailPlaceholder}
-                      onChange={(e) => setContactForm({ ...contactForm, emailPlaceholder: e.target.value })}
+                      type="email"
+                      value={contactForm.email}
+                      onChange={(e) =>
+                        setContactForm({
+                          ...contactForm,
+                          email: e.target.value,
+                          emailPlaceholder: e.target.value,
+                        })
+                      }
                       className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-xs text-white focus:border-[#D4AF37] focus:outline-none"
                     />
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="text-xs font-mono-accent uppercase tracking-wider text-slate-300">
-                      Phone Number Placeholder
-                    </label>
-                    <input
-                      type="text"
-                      value={contactForm.phonePlaceholder}
-                      onChange={(e) => setContactForm({ ...contactForm, phonePlaceholder: e.target.value })}
-                      className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-xs text-white focus:border-[#D4AF37] focus:outline-none"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-xs font-mono-accent uppercase tracking-wider text-slate-300">
+                        Primary Telephone
+                      </label>
+                      <input
+                        type="text"
+                        value={contactForm.phones?.[0] || '+256 782 363 894'}
+                        onChange={(e) => {
+                          const newPhones = [...(contactForm.phones || ['+256 782 363 894', '+256 777 794 602'])];
+                          newPhones[0] = e.target.value;
+                          setContactForm({
+                            ...contactForm,
+                            phones: newPhones,
+                            phonePlaceholder: newPhones.join(' / '),
+                          });
+                        }}
+                        className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-xs text-white focus:border-[#D4AF37] focus:outline-none"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-mono-accent uppercase tracking-wider text-slate-300">
+                        Secondary Telephone
+                      </label>
+                      <input
+                        type="text"
+                        value={contactForm.phones?.[1] || '+256 777 794 602'}
+                        onChange={(e) => {
+                          const newPhones = [...(contactForm.phones || ['+256 782 363 894', '+256 777 794 602'])];
+                          newPhones[1] = e.target.value;
+                          setContactForm({
+                            ...contactForm,
+                            phones: newPhones,
+                            phonePlaceholder: newPhones.join(' / '),
+                          });
+                        }}
+                        className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-xs text-white focus:border-[#D4AF37] focus:outline-none"
+                      />
+                    </div>
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-mono-accent uppercase tracking-wider text-slate-300">
-                      Secretariat / Office Address Placeholder
+                      Secretariat Physical Location
                     </label>
-                    <textarea
-                      rows={2}
-                      value={contactForm.officeAddressPlaceholder}
-                      onChange={(e) => setContactForm({ ...contactForm, officeAddressPlaceholder: e.target.value })}
-                      className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-xs text-white focus:border-[#D4AF37] focus:outline-none leading-relaxed"
+                    <input
+                      type="text"
+                      value={contactForm.location || 'Nommo Gallery'}
+                      onChange={(e) =>
+                        setContactForm({ ...contactForm, location: e.target.value })
+                      }
+                      placeholder="e.g. Nommo Gallery"
+                      className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-xs text-white focus:border-[#D4AF37] focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-xs font-mono-accent uppercase tracking-wider text-slate-300">
+                        Opposite / Landmark
+                      </label>
+                      <input
+                        type="text"
+                        value={contactForm.opposite || 'Opposite Rwenzori House'}
+                        onChange={(e) =>
+                          setContactForm({ ...contactForm, opposite: e.target.value })
+                        }
+                        className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-xs text-white focus:border-[#D4AF37] focus:outline-none"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-mono-accent uppercase tracking-wider text-slate-300">
+                        City & Country
+                      </label>
+                      <input
+                        type="text"
+                        value={contactForm.cityCountry || 'Kampala, Uganda'}
+                        onChange={(e) =>
+                          setContactForm({ ...contactForm, cityCountry: e.target.value })
+                        }
+                        className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-xs text-white focus:border-[#D4AF37] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-mono-accent uppercase tracking-wider text-slate-300">
+                      Postal Address
+                    </label>
+                    <input
+                      type="text"
+                      value={contactForm.postalAddress || 'P.O. Box 120762, Kampala, Uganda'}
+                      onChange={(e) =>
+                        setContactForm({
+                          ...contactForm,
+                          postalAddress: e.target.value,
+                          officeAddressPlaceholder: `VACOCA Secretariat, ${contactForm.location}, ${contactForm.opposite}, ${contactForm.cityCountry} (${e.target.value})`,
+                        })
+                      }
+                      className="w-full bg-[#161C28] border border-white/10 rounded-lg p-2.5 text-xs text-white focus:border-[#D4AF37] focus:outline-none"
                     />
                   </div>
                 </div>

@@ -5,74 +5,65 @@ import {
   ArrowRight,
   MessageSquareQuote,
   GraduationCap,
-  BookOpen,
-  Building2,
   Award,
-  Globe2,
   Users2,
-  Layers,
-  Sparkles,
+  Calendar,
+  CheckCircle2,
   ExternalLink,
+  ShieldCheck,
+  Building2,
 } from 'lucide-react';
 
 export const LeadershipView: React.FC = () => {
-  const { leaderProfile, setIsCMSOpen, setCurrentView, setSelectedArticle, stories } = useApp();
-
-  const dwcPublications = [
-    {
-      title: 'USA-Israel War Against Iran Is Illegal & Sets Cements Precedent',
-      type: 'Foreign Policy & International Law Analysis',
-      focus: 'Legal sovereignty, UN charters, and unilateral escalation boundaries.',
-      author: 'Dr. Allawi Ssemanda Apuuli',
-      slug: 'dwc-usa-israel-iran-international-law-analysis',
-    },
-    {
-      title: 'Africa: The World’s Fastest Growing Continent But Home to 90% of World’s Poorest?',
-      type: 'Socio-Economic Review',
-      focus: 'Resource extraction paradoxes, procurement leakage, and wealth disparities.',
-      author: 'Development Watch Centre Research Desk',
-      slug: 'dwc-africa-economic-growth-paradox-poverty',
-    },
-    {
-      title: 'A Critical Analysis of China’s Infrastructure Assistance To Uganda',
-      type: 'Peer-Reviewed Research Paper',
-      focus: 'Bilateral financing mechanics, sovereign debt governance, and contract transparency.',
-      author: 'Dr. Allawi Ssemanda Apuuli et al.',
-      slug: 'dwc-china-infrastructure-assistance-uganda-analysis',
-    },
-    {
-      title: 'The Unfinished War: The African Struggle for Intellectual Sovereignty',
-      type: 'Decolonial Policy Commentary',
-      focus: 'Decolonial knowledge production, domestic think tank funding, and research autonomy.',
-      author: 'Dr. Allawi Ssemanda Apuuli',
-      slug: 'dwc-african-struggle-intellectual-sovereignty',
-    },
-  ];
+  const { leaderProfile, founders, setIsCMSOpen, setCurrentView, setSelectedArticle, stories } = useApp();
 
   const universityChapters = [
     {
       campus: 'Mbarara University of Science and Technology (MUST)',
-      role: 'Founding Chapter (Inception: 2010)',
+      role: 'Founding Campus Chapter (2009–2011)',
       established: 'Western Uganda',
-      notes: 'Where Dr. Ssemanda initiated VACOCA during his studies and subsequent 2011 Guild Presidency.',
+      notes: 'Pioneered early student anti-corruption training and accountability lecture forums.',
     },
     {
       campus: 'Makerere University',
-      role: 'Central Regional Chapter',
+      role: 'National Student Chapter Hub',
       established: 'Kampala, Uganda',
-      notes: 'Active hub for student-led accountability debates, legal symposiums, and public finance scrutiny.',
+      notes: 'Trained thousands of student advocates in budget scrutiny and integrity ethics.',
     },
     {
       campus: 'Ndejje University',
       role: 'Inter-Campus Mobilization Chapter',
       established: 'Luweero & Kampala',
-      notes: 'Coordinating student integrity clubs and community-level social audit exercises.',
+      notes: 'Coordinated student integrity clubs and community-level social audit exercises.',
     },
     {
       campus: 'Bishop Stuart University',
       role: 'Western Regional Chapter',
       established: 'Mbarara, Uganda',
-      notes: 'Engaging student guilds and grassroots youth networks on anti-extortion civic monitoring.',
+      notes: 'Engaged student guilds and grassroots youth networks on anti-extortion civic monitoring.',
+    },
+  ];
+
+  const historicalMilestones = [
+    {
+      year: '2008',
+      title: 'The Presidential National State Address',
+      desc: 'During a national address, President Yoweri Museveni declared he had won many battles, but the battle he had failed to win was the battle against corruption, leaving it to every Ugandan to help him. General Elly Tumwine drew immediate inspiration from this call to create VACOCA.',
+    },
+    {
+      year: '2009–2010',
+      title: 'Founding Council & Campus Chapters',
+      desc: 'General Elly Tumwine united with co-founders Hon. Major Kyomugisha Grace, Yasine Juma, Waidhuba John, and Merab Akampumuza to establish university chapters, training youth on fighting graft without financial dependency.',
+    },
+    {
+      year: 'Early 2011',
+      title: 'Growth to Over 5,000 Volunteers',
+      desc: 'Through dedicated campus outreach and community rallies, VACOCA surpassed 5,000 active members and developed an autonomous student guild network across Uganda.',
+    },
+    {
+      year: 'March 2011',
+      title: 'Full Official NGO Registration',
+      desc: 'VACOCA was officially and fully registered in March 2011 as a non-partisan civil society organization, solidifying its institutional mandate.',
     },
   ];
 
@@ -94,14 +85,14 @@ export const LeadershipView: React.FC = () => {
             <div className="flex items-center space-x-3">
               <div className="w-8 h-[2px] bg-[#1B4332]" />
               <span className="text-xs font-mono-accent font-bold tracking-widest text-[#1B4332] uppercase">
-                Academic Leadership & Civic Stewardship
+                Origins, Leadership & Founding History
               </span>
             </div>
             <h1 className="text-4xl sm:text-6xl font-black text-[#1A1A1A] uppercase font-display tracking-tight leading-tight">
-              FOUNDER & <span className="text-[#1B4332]">LEADERSHIP</span>
+              FOUNDERS & <span className="text-[#1B4332]">LEADERSHIP</span>
             </h1>
             <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-light">
-              Meet the intellectual visionaries and youth mobilization leaders guiding Volunteers Anti-Corruption Campaign Africa in building an unbought, volunteer-driven civic front.
+              Discover the true history of VACOCA, inspired in 2008 by President Yoweri Museveni’s national address, led by General Elly Tumwine and the original co-founders to full registration in March 2011.
             </p>
           </div>
 
@@ -116,7 +107,7 @@ export const LeadershipView: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-        {/* Main Leader Feature: Dr. Allawi Ssemanda Apuuli */}
+        {/* Main Leader Feature: General Elly Tumwine */}
         <section className="bg-white border border-gray-200 border-l-4 border-[#D4AF37] p-8 sm:p-12 shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Leader Portrait & Credentials */}
@@ -144,35 +135,35 @@ export const LeadershipView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Quick Academic & Public Record Fast-Facts */}
+              {/* Founding Highlights Fast-Facts */}
               <div className="p-5 bg-[#F9F9F7] border border-gray-200 space-y-3">
                 <div className="text-xs font-mono-accent font-bold uppercase tracking-wider text-[#1A1A1A] flex items-center gap-2">
-                  <Award className="w-4 h-4 text-[#D4AF37]" /> Core Academic & Civic Credentials
+                  <Award className="w-4 h-4 text-[#D4AF37]" /> Historical Founding Record
                 </div>
                 <ul className="space-y-2 text-xs text-gray-700">
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#1B4332] mt-1.5 shrink-0" />
-                    <span><strong>Origin:</strong> Raised in Mbarara, Western Uganda.</span>
+                    <span><strong>Inception:</strong> Inspired in 2008 following President Yoweri Museveni’s national state address.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#1B4332] mt-1.5 shrink-0" />
-                    <span><strong>Doctorate:</strong> Ph.D. in International Relations (International Law focus).</span>
+                    <span><strong>Lead Founder:</strong> General Elly Tumwine conceived and guided the volunteer movement.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#1B4332] mt-1.5 shrink-0" />
-                    <span><strong>Think Tank Leadership:</strong> Executive Director, Development Watch Centre (DWC).</span>
+                    <span><strong>Original Co-Founders:</strong> Hon. Major Kyomugisha Grace, Yasine Juma, Waidhuba John, and Merab Akampumuza.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#1B4332] mt-1.5 shrink-0" />
-                    <span><strong>Student Leadership:</strong> Guild President, Mbarara University of Science and Technology (MUST, 2011).</span>
+                    <span><strong>Movement Growth:</strong> Reached 5,000+ members and established university chapters by 2011.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#1B4332] mt-1.5 shrink-0" />
-                    <span><strong>Published Book:</strong> <em>Global Governance and Norm Contestation: How BRICS is Reshaping World Order</em>.</span>
+                    <span><strong>Registration:</strong> Fully and officially registered in March 2011.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#1B4332] mt-1.5 shrink-0" />
-                    <span><strong>VACOCA Founding:</strong> Founded in 2010 at MUST on the Zero-Budget Volunteer Mandate.</span>
+                    <span><strong>Core Principle:</strong> The Zero-Budget Volunteer Mandate—fighting corruption as a patriotic duty.</span>
                   </li>
                 </ul>
               </div>
@@ -182,7 +173,7 @@ export const LeadershipView: React.FC = () => {
             <div className="lg:col-span-7 space-y-6">
               <div className="space-y-1">
                 <span className="text-xs font-mono-accent text-[#1B4332] font-bold tracking-widest uppercase">
-                  Movement Founder Profile
+                  Lead Founder & Inspirer
                 </span>
                 <h2 className="text-3xl sm:text-5xl font-black text-[#1A1A1A] uppercase font-display tracking-tight">
                   {leaderProfile.name}
@@ -209,13 +200,13 @@ export const LeadershipView: React.FC = () => {
                 ))}
               </div>
 
-              {/* High-Level Engagement Context */}
+              {/* Founding Context Callout */}
               <div className="p-5 bg-white border border-gray-200 space-y-2">
                 <div className="text-xs font-mono-accent font-bold uppercase text-[#1B4332] flex items-center gap-2">
-                  <Users2 className="w-4 h-4 text-[#D4AF37]" /> High-Level Accountability Dialogue Record
+                  <Users2 className="w-4 h-4 text-[#D4AF37]" /> The 2008 State Address Genesis
                 </div>
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                  Through VACOCA's Intellectual Activism model, Dr. Ssemanda and student leaders have hosted high-level accountability forums and direct dialogues featuring prominent national statesmen, including former Prime Minister Hon. Amama Mbabazi, the late Security Minister Gen. Elly Tumwine, senior military commanders, seasoned constitutional lawyers, and public officials.
+                  During a 2008 national state address, President Yoweri Museveni stated that while he had won many battles, the battle that he had failed to win was the battle against corruption, leaving it to every Ugandan to help him on it. General Elly Tumwine was inspired by this address to create VACOCA, establishing a voluntary platform for every citizen to take up this critical duty.
                 </p>
               </div>
 
@@ -231,68 +222,113 @@ export const LeadershipView: React.FC = () => {
                   onClick={() => setCurrentView('news')}
                   className="px-6 py-4 border border-gray-300 hover:bg-gray-100 text-[#1A1A1A] text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer"
                 >
-                  Read Policy Research
+                  Explore Historical Dispatches
                 </button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section: Development Watch Centre (DWC) Publications */}
+        {/* Section: The Original Founders */}
         <section className="space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-200">
             <div className="space-y-2 max-w-2xl">
               <div className="flex items-center space-x-2">
-                <Building2 className="w-4 h-4 text-[#D4AF37]" />
+                <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
                 <span className="text-xs font-mono-accent text-[#1B4332] font-bold uppercase tracking-wider">
-                  Independent Foreign Policy Think Tank
+                  Founding Council (Registered March 2011)
                 </span>
               </div>
               <h2 className="text-3xl font-black text-[#1A1A1A] uppercase font-display">
-                DEVELOPMENT WATCH CENTRE (DWC) RESEARCH
+                THE ORIGINAL FOUNDERS OF VACOCA
               </h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                As Executive Director of DWC, Dr. Allawi Ssemanda provides intellectual rigor and policy depth to anti-corruption advocacy through foreign policy, development economics, and international law scholarship.
+                The distinguished patriots and civic champions who led the movement alongside Lead Founder General Elly Tumwine:
               </p>
             </div>
-
-            <button
-              onClick={() => setCurrentView('news')}
-              className="self-start md:self-auto px-4 py-2.5 bg-white border border-gray-300 hover:border-[#1B4332] text-xs font-bold uppercase tracking-widest text-[#1A1A1A] flex items-center gap-2 transition-colors cursor-pointer"
-            >
-              <span>View All Dispatches</span>
-              <ArrowRight className="w-3.5 h-3.5 text-[#1B4332]" />
-            </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {dwcPublications.map((pub, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {founders.map((f) => (
               <div
-                key={idx}
-                onClick={() => handleOpenPublication(pub.slug)}
-                className="p-6 bg-white border border-gray-200 hover:border-[#1B4332] transition-all cursor-pointer space-y-4 shadow-sm group flex flex-col justify-between"
+                key={f.id}
+                className="p-6 bg-white border border-gray-200 border-t-4 border-[#1B4332] space-y-4 shadow-sm hover:border-[#D4AF37] transition-colors"
               >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-[10px] font-mono-accent uppercase tracking-widest text-gray-500">
-                    <span className="px-2 py-0.5 bg-[#F9F9F7] border border-gray-200 text-[#1B4332] font-bold">
-                      {pub.type}
-                    </span>
-                    <span>DWC Research</span>
-                  </div>
-                  <h3 className="text-base sm:text-lg font-bold text-[#1A1A1A] group-hover:text-[#1B4332] transition-colors leading-snug">
-                    {pub.title}
-                  </h3>
-                  <p className="text-xs text-gray-600 leading-relaxed">
-                    {pub.focus}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
-                  <span className="font-semibold text-gray-700">{pub.author}</span>
-                  <span className="text-[#1B4332] font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                    Read Analysis <ExternalLink className="w-3 h-3" />
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono-accent uppercase tracking-widest text-[#1B4332] font-bold bg-[#F9F9F7] px-2.5 py-1 border border-gray-200">
+                    {f.badge}
+                  </span>
+                  <span className="text-[10px] uppercase font-bold text-gray-500 font-mono-accent">
+                    March 2011 Charter
                   </span>
                 </div>
+                <div>
+                  <h3 className="text-lg font-black text-[#1A1A1A] font-display uppercase tracking-tight">
+                    {f.name}
+                  </h3>
+                  <div className="text-xs text-[#D4AF37] font-semibold font-mono-accent pt-0.5">
+                    {f.role}
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  {f.bio}
+                </p>
+              </div>
+            ))}
+            <div className="p-6 bg-[#1A1A1A] text-white border border-gray-800 space-y-4 shadow-sm flex flex-col justify-between">
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono-accent uppercase tracking-widest text-[#D4AF37] font-bold">
+                  Collective Legacy
+                </span>
+                <h3 className="text-lg font-black text-white font-display uppercase tracking-tight">
+                  Over 5,000 Founding Volunteers by 2011
+                </h3>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Through the uncompromised leadership of General Elly Tumwine, Hon. Major Kyomugisha Grace, Yasine Juma, Waidhuba John, and Merab Akampumuza, VACOCA established youth chapters in universities across Uganda, leading to full registration in March 2011.
+                </p>
+              </div>
+              <button
+                onClick={() => setCurrentView('get-involved')}
+                className="w-full bg-[#1B4332] hover:bg-green-800 text-white text-xs font-bold uppercase tracking-widest py-3 text-center transition-colors cursor-pointer"
+              >
+                Volunteer With Us
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Historical Milestones (2008-2011) */}
+        <section className="space-y-8">
+          <div className="space-y-2 max-w-2xl">
+            <div className="flex items-center space-x-2">
+              <Calendar className="w-4 h-4 text-[#D4AF37]" />
+              <span className="text-xs font-mono-accent text-[#1B4332] font-bold uppercase tracking-wider">
+                Chronology of the Movement
+              </span>
+            </div>
+            <h2 className="text-3xl font-black text-[#1A1A1A] uppercase font-display">
+              HISTORICAL FOUNDING MILESTONES
+            </h2>
+            <p className="text-sm text-gray-600">
+              The defining moments that shaped VACOCA from the 2008 presidential speech to formal incorporation in March 2011.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {historicalMilestones.map((m, idx) => (
+              <div
+                key={idx}
+                className="p-6 bg-white border border-gray-200 border-t-4 border-[#1B4332] space-y-3 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="text-2xl font-black font-display text-[#1B4332]">
+                  {m.year}
+                </div>
+                <h4 className="text-sm font-bold text-[#1A1A1A] uppercase leading-snug">
+                  {m.title}
+                </h4>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  {m.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -308,10 +344,10 @@ export const LeadershipView: React.FC = () => {
               </span>
             </div>
             <h2 className="text-3xl font-black text-[#1A1A1A] uppercase font-display">
-              INTER-UNIVERSITY CHAPTER NETWORK
+              UNIVERSITY CHAPTER NETWORK IN UGANDA
             </h2>
             <p className="text-sm text-gray-600">
-              Founded at Mbarara University of Science and Technology in 2010, VACOCA operates semi-autonomous student chapters enabling young leaders to monitor university procurement and host intellectual accountability forums.
+              By 2011, VACOCA had established different chapters across universities of Uganda where they systematically trained youths about the importance of fighting corruption and upholding civic values.
             </p>
           </div>
 
@@ -346,7 +382,7 @@ export const LeadershipView: React.FC = () => {
               ADVISORY & WORKING COMMITTEES
             </h2>
             <p className="text-sm text-gray-600">
-              VACOCA operates under a decentralized, volunteer-led structure. Additional executive positions and specialized advisory appointments are ratified and announced via official dispatches.
+              VACOCA operates under a decentralized, volunteer-led structure established by the original founders.
             </p>
           </div>
 
@@ -361,7 +397,7 @@ export const LeadershipView: React.FC = () => {
               {
                 num: '02',
                 role: 'Youth & Campus Integrity Network',
-                desc: 'Coordinating student-led integrity clubs and civic monitoring chapters in higher institutions across Africa.',
+                desc: 'Coordinating student-led integrity clubs and civic monitoring chapters in higher institutions across Uganda and Africa.',
                 status: 'Mobilization Cell',
               },
               {

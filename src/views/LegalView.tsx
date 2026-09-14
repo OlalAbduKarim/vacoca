@@ -37,7 +37,7 @@ export const LegalView: React.FC<LegalViewProps> = ({ type }) => {
       sections: [
         {
           heading: '1. The Voluntary Principle',
-          body: 'VACOCA was founded in 2010 by Dr. Allawi Ssemanda Apuuli on the foundational principle that citizens must willingly volunteer to defeat corruption rather than treating activism as a commercial enterprise or donor-dependent career.',
+          body: 'VACOCA was inspired in 2008 by President Yoweri Museveni’s national state address and founded by General Elly Tumwine alongside original co-founders Hon. Major Kyomugisha Grace, Yasine Juma, Waidhuba John, and Merab Akampumuza (fully registered in March 2011) on the foundational principle that citizens must willingly volunteer to defeat corruption rather than treating activism as a commercial enterprise or donor-dependent career.',
         },
         {
           heading: '2. Non-Partisan Stewardship',

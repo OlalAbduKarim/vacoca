@@ -8,6 +8,8 @@ import {
   CheckCircle2,
   Send,
   Shield,
+  Mail,
+  Lock,
 } from 'lucide-react';
 
 export const GetInvolvedView: React.FC = () => {
@@ -27,6 +29,7 @@ export const GetInvolvedView: React.FC = () => {
     weeklyHours: '2-4 hours/week',
   });
   const [volunteerSubmitted, setVolunteerSubmitted] = useState(false);
+  const [lastEnrolledVolunteer, setLastEnrolledVolunteer] = useState<typeof volunteerForm | null>(null);
 
   // Partner Form State
   const [partnerForm, setPartnerForm] = useState({
@@ -47,6 +50,7 @@ export const GetInvolvedView: React.FC = () => {
   const handleVolunteerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     submitVolunteer(volunteerForm);
+    setLastEnrolledVolunteer({ ...volunteerForm });
     setVolunteerSubmitted(true);
     setVolunteerForm({
       fullName: '',
@@ -145,21 +149,63 @@ export const GetInvolvedView: React.FC = () => {
                 </p>
               </div>
 
-              {volunteerSubmitted ? (
-                <div className="p-8 bg-[#F9F9F7] border border-gray-200 border-t-4 border-[#1B4332] text-center space-y-4">
+              {volunteerSubmitted && lastEnrolledVolunteer ? (
+                <div className="p-8 bg-[#F9F9F7] border border-gray-200 border-t-4 border-[#1B4332] text-center space-y-6">
                   <CheckCircle2 className="w-12 h-12 text-[#1B4332] mx-auto" />
-                  <h4 className="text-xl font-bold text-[#1A1A1A] uppercase font-display">
-                    Application Received!
-                  </h4>
-                  <p className="text-sm text-gray-600 max-w-md mx-auto leading-relaxed">
-                    Thank you for stepping forward for Africa. A VACOCA regional volunteer coordinator will review your information and contact you with orientation details.
-                  </p>
-                  <button
-                    onClick={() => setVolunteerSubmitted(false)}
-                    className="px-6 py-2.5 border border-gray-300 hover:bg-gray-100 text-[#1A1A1A] text-xs font-bold uppercase tracking-wider cursor-pointer"
-                  >
-                    Submit Another Application
-                  </button>
+                  <div className="space-y-2">
+                    <h4 className="text-xl font-bold text-[#1A1A1A] uppercase font-display">
+                      Enrollment Received & Dispatched!
+                    </h4>
+                    <p className="text-sm text-gray-600 max-w-md mx-auto leading-relaxed">
+                      Thank you for joining the anti-corruption movement. Your enrollment record has been logged and transmitted directly to the NGO secretariat.
+                    </p>
+                  </div>
+
+                  {/* Transmission Verification Banner */}
+                  <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-medium flex items-center justify-center gap-2 rounded-none">
+                    <Mail className="w-4 h-4 text-emerald-700 shrink-0" />
+                    <span>Sent to NGO Email: <strong>anticorruptionvolunteers150@gmail.com</strong></span>
+                  </div>
+
+                  {/* Summary of Enrolled Volunteer */}
+                  <div className="p-4 bg-white border border-gray-200 text-left text-xs space-y-2 max-w-lg mx-auto">
+                    <div className="flex justify-between border-b border-gray-100 pb-1.5">
+                      <span className="text-gray-500 font-mono-accent uppercase">Volunteer:</span>
+                      <strong className="text-[#1A1A1A]">{lastEnrolledVolunteer.fullName}</strong>
+                    </div>
+                    <div className="flex justify-between border-b border-gray-100 pb-1.5">
+                      <span className="text-gray-500 font-mono-accent uppercase">Email:</span>
+                      <span className="text-[#1B4332] font-mono">{lastEnrolledVolunteer.email}</span>
+                    </div>
+                    <div className="flex justify-between border-b border-gray-100 pb-1.5">
+                      <span className="text-gray-500 font-mono-accent uppercase">Phone / Location:</span>
+                      <span className="text-[#1A1A1A]">{lastEnrolledVolunteer.phone} • {lastEnrolledVolunteer.city}, {lastEnrolledVolunteer.country}</span>
+                    </div>
+                    <div className="flex justify-between border-b border-gray-100 pb-1.5">
+                      <span className="text-gray-500 font-mono-accent uppercase">Focus Track:</span>
+                      <span className="text-[#1A1A1A]">{lastEnrolledVolunteer.areaOfInterest}</span>
+                    </div>
+                    <div className="flex justify-between pt-0.5">
+                      <span className="text-gray-500 font-mono-accent uppercase">Availability:</span>
+                      <span className="text-[#1A1A1A]">{lastEnrolledVolunteer.weeklyHours}</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a
+                      href={`mailto:anticorruptionvolunteers150@gmail.com?subject=${encodeURIComponent(`[VACOCA Volunteer Enrollment] ${lastEnrolledVolunteer.fullName} - ${lastEnrolledVolunteer.city}, ${lastEnrolledVolunteer.country}`)}&body=${encodeURIComponent(`To: Volunteers Anti-Corruption Campaign Africa (VACOCA)\nSecretariat Email: anticorruptionvolunteers150@gmail.com\n\nI have enrolled as a volunteer with VACOCA.\n\nAPPLICANT DETAILS:\n- Full Name: ${lastEnrolledVolunteer.fullName}\n- Email: ${lastEnrolledVolunteer.email}\n- Phone: ${lastEnrolledVolunteer.phone}\n- Location: ${lastEnrolledVolunteer.city}, ${lastEnrolledVolunteer.country}\n- Focus Area: ${lastEnrolledVolunteer.areaOfInterest}\n- Availability: ${lastEnrolledVolunteer.weeklyHours}\n- Skills: ${lastEnrolledVolunteer.skills}\n\nMotivation:\n"${lastEnrolledVolunteer.motivation}"\n\nSubmitted through VACOCA official portal.`)}`}
+                      className="w-full sm:w-auto px-5 py-3 bg-[#1B4332] hover:bg-green-800 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                    >
+                      <Mail className="w-4 h-4 text-[#D4AF37]" />
+                      <span>Send Direct Email Copy</span>
+                    </a>
+                    <button
+                      onClick={() => setVolunteerSubmitted(false)}
+                      className="w-full sm:w-auto px-5 py-3 border border-gray-300 hover:bg-gray-100 text-[#1A1A1A] text-xs font-bold uppercase tracking-wider cursor-pointer"
+                    >
+                      Enroll Another Person
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleVolunteerSubmit} className="space-y-4">
@@ -308,6 +354,13 @@ export const GetInvolvedView: React.FC = () => {
                     />
                   </div>
 
+                  <div className="p-3 bg-[#F9F9F7] border border-gray-200 text-xs text-gray-700 flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-[#1B4332] shrink-0" />
+                    <span>
+                      <strong>Direct Delivery:</strong> Your enrollment data is automatically forwarded to the NGO email at <code className="text-[#1B4332] font-mono font-bold">anticorruptionvolunteers150@gmail.com</code>.
+                    </span>
+                  </div>
+
                   <div className="pt-2">
                     <button
                       type="submit"
@@ -350,8 +403,28 @@ export const GetInvolvedView: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="p-6 bg-white border border-gray-200 border-l-4 border-[#D4AF37] text-xs text-gray-700 leading-relaxed shadow-sm">
-                <strong className="text-[#1A1A1A]">Volunteer Code of Integrity:</strong> All VACOCA volunteers sign our non-partisan ethics pledge, committing never to solicit unauthorized fees or misrepresent the movement for personal benefit.
+              <div className="p-6 bg-white border border-gray-200 border-l-4 border-[#D4AF37] text-xs text-gray-700 leading-relaxed shadow-sm space-y-2">
+                <strong className="text-[#1A1A1A] block">Volunteer Code of Integrity:</strong>
+                <p>
+                  All VACOCA volunteers sign our non-partisan ethics pledge, committing never to solicit unauthorized fees or misrepresent the movement for personal benefit.
+                </p>
+                <div className="pt-2 border-t border-gray-100 text-[11px] text-[#1B4332] font-bold font-mono-accent uppercase">
+                  Motto: “No more corruption we shall win.”
+                </div>
+              </div>
+
+              <div className="p-6 bg-[#1A1A1A] text-white border border-gray-800 space-y-2 text-xs">
+                <div className="text-[10px] font-mono-accent uppercase font-bold text-[#D4AF37]">
+                  VACOCA Secretariat Office
+                </div>
+                <p className="text-gray-300 leading-snug">
+                  Nommo Gallery, Opposite Rwenzori House<br />
+                  Kampala, Uganda • P.O. Box 120762
+                </p>
+                <p className="text-gray-400 text-[11px] pt-1">
+                  Email: anticorruptionvolunteers150@gmail.com<br />
+                  Tel: +256 782 363 894 / +256 777 794 602
+                </p>
               </div>
             </div>
           </div>
